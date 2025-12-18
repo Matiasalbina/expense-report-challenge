@@ -1,0 +1,8 @@
+[
+  { "id": 1, "name": "Travel" },
+  { "id": 2, "name": "Meals" },
+  { "id": 3, "name": "Office Supplies" },
+  { "id": 4, "name": "Software / Subscriptions" },
+  { "id": 5, "name": "Training" },
+  { "id": 6, "name": "Other" }
+]
