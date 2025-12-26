@@ -48,10 +48,8 @@ async def parse_expenses_file(file: UploadFile) -> List[Dict[str, Any]]:
             f"Missing required columns: {', '.join(missing)}. Required: {', '.join(REQUIRED_COLUMNS)}"
         )
 
-    # Nos quedamos solo con las columnas requeridas (en orden)
     df = df[REQUIRED_COLUMNS].copy()
 
-    # Opcional (recomendado): eliminar filas totalmente vacías
     df = df.dropna(how="all")
 
     # Convertimos NaN a None para validaciones más limpias

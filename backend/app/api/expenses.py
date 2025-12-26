@@ -44,10 +44,8 @@ async def validate_expenses(file: UploadFile = File(...)):
     try:
         rows = await parse_expenses_file(file)
     except HTTPException:
-        # parse_expenses_file ya lanza HTTPException con status_code/detail correctos
         raise
     except Exception:
-        # Para cualquier error no esperado, evita filtrar internals
         raise HTTPException(status_code=500, detail="Failed to parse file")
 
     valid: List[RowValidationResult] = []

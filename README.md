@@ -1,124 +1,217 @@
-# Full-Stack Technical Challenge: Expense Report App
+🧾 Expense Report App – Full-Stack Technical Challenge
+📌 Overview
 
-## Overview
+This project is a full-stack expense reporting application built as part of a technical assessment.
+The goal of the app is to allow employees to:
 
-Welcome! This assessment evaluates your ability to build a realistic business application using **React**, **TypeScript**, and **FastAPI**.
+- Log in (mock authentication)
+- Create expense reports manually or via bulk file upload
+- Validate expenses against business rules
+- Submit valid reports
+- View submitted reports and their details
+- Visualize expenses using analytics charts (bonus feature)
+- The application focuses on clean architecture, strong validation, clear UX feedback, and type safety across frontend and backend.
 
-The goal is to build an internal expense reporting tool where employees can draft expenses (manually or via file upload), validate them against business rules, and submit them.
+🏗️ Tech Stack Frontend
 
-- **Role:** Full Stack Developer
-- **Stack:** React + TypeScript (Frontend), FastAPI (Backend)
+React
 
-## The Challenge
+- TypeScript
+- Vite
+- Tailwind CSS
+- Chart.js (via react-chartjs-2)
 
-### 1. Architecture & Setup
+Backend
 
-- **Persistence:** You do **not** need a real database (Postgres/MySQL). You may use an in-memory structure (global variables) or a local JSON file to persist data on the backend.
+- FastAPI
+- Pydantic
+- Python 3
+- Persistence
+- In-memory data structures / local JSON files
+- No database required (as specified in the challenge)
 
-### 2. Authentication (Mocked)
+✨ Features
 
-- Create a simple Login page (Email/Password).
-- **Validation:** Email format must be valid. Password cannot be empty.
-- **Flow:** On success, the backend returns a mock token. The frontend should persist this (e.g., LocalStorage) to protect dashboard routes.
+🔐 Authentication (Mocked)
 
-### 3. Dashboard & Manual Entry
+- Simple login page (email + password)
+- Email format validation
+- Password required
+- Backend returns a mock token
+- Token stored in LocalStorage
+- Dashboard routes protected on the frontend
 
-- **Dashboard:** Displays a list of submitted reports.
-- **Create Report:** A form to add a single expense line item.
-  - **Fields:** Date, Amount, Currency (Fixed to USD), Department, Category, Description.
-  - **Dropdowns:** Populate Department and Category options using the JSON files provided in `/data`.
+📊 Dashboard
 
-### 4. Bulk Upload & Validation (Key Requirement)
+Displays a list of submitted expense reports
+Shows:
 
-Users must be able to upload the provided `sample_expenses.xlsx` or `.csv` file.
+- Creation date
+- Number of items
+- Total amount
+- Ability to view report
 
-1.  Frontend sends the file to Backend `POST /expenses/validate`.
-2.  Backend parses the file and checks **every row**.
-3.  Backend returns which rows are valid and which have errors.
-4.  Frontend displays a summary (e.g., "Row 3 Error: Future date not allowed").
-5.  User can only "Submit" the report once errors are fixed or invalid rows are removed.
+✍️ Manual Expense Entry
 
-### 5. Business Rules
+Create a single expense line item using a form with:
 
-- **Amount:** Must be > 0.
-- **Date:** Cannot be in the future.
-- **Currency:** **Must be 'USD'**. Any other currency should be flagged as invalid.
-- **Description:** Minimum 3 characters.
+- Date (restricted to allowed range)
+- Amount (must be > 0)
+- Currency (fixed to USD)
+- Department (dropdown from /data)
+- Category (dropdown from /data)
+- Description (minimum 3 characters)
 
----
+UX highlights:
 
-## Technical Expectations
+- Client-side validation
+- Clear red error messages when fields are missing or invalid
+- Visual field highlighting
+- Success confirmation on submit
 
-### 1. Frontend (React + TS)
+📂 Bulk Upload & Validation (Core Requirement)
 
-- **Type Safety:** Strong usage of Interfaces/Types.
-- **State Management:** Clear handling of "Draft" vs "Submitted" state.
-- **UX:** Clear error feedback.
+Users can upload a .csv or .xlsx file containing multiple expenses.
+Flow:
 
-### 2. UI & Styling
+- Frontend sends file to POST /expenses/validate
+- Backend parses and validates every row
 
-- **Framework:** You are free to use any CSS framework or Component Library (explain your choice).
-- **Responsiveness:** The Dashboard and Forms must be responsive.
-- **Feedback:** The UI must communicate state changes clearly:
-  - Show a **loading spinner** or progress bar during file upload.
-  - Show **red error messages** (toasts or alerts) when validation fails.
-  - Show a **success message** when a report is submitted.
-- **Formatting:** Ensure all monetary values are formatted correctly as currency (e.g., `$1,200.00`) and dates follow the Us convention MM-DD-YYYY
+Backend returns:
 
-### 3. Backend (FastAPI)
+- Valid rows
+- Invalid rows with detailed error messages
 
-- **Pydantic:** Use models for schema validation.
-- **Architecture:** Clean separation of concerns (don't put all logic in one file).
-- Requirements reference file was provided, you can add aditional libraries if you consider they will add value to the solution.
+Frontend displays:
 
-## Evaluation Criteria
+- Validation summary
+- Row-level errors (e.g. “Row 3: Future date not allowed”)
+- Users must remove or fix invalid rows before submitting
+- Only valid rows can be submitted as a report
 
-We look for:
+✅ Business Rules Implemented
 
-1.  **Code Quality:** Readability and structure.
-2.  **Validation Logic:** Handling of edge cases in the file upload.
-3.  **Completeness:** Does the full flow (Login -> Upload -> Validate -> Submit) work?
-4.  **UI/UX Implementation:**
-    - Responsiveness &
-    - Polish on user feedback (loading states, error handling).
+- Amount: Must be greater than 0
+- Date: Cannot be in the future
+- Currency: Must be USD
+- Description: Minimum 3 characters
+- Department & Category: Must exist in /data reference files
+  All rules are enforced on the backend, with additional UX validation on the frontend.
 
-## Setup & Deliverables
+Analytics Dashboard
 
-1. **How to Submit**:
-   -Fork this repository to your own GitHub account.
-   -Push your changes to your fork.
-   -Send us the URL to your repository. (If you prefer to keep your submission private, please clone this repo, push to a private repo of your own, and invite us as collaborators.)
-2. **Deliverables:**
-   - Source code in `/frontend` and `/backend`.
-   - `README.md` with instructions to run your solution.
-3. **Inputs:** See the `/data` folder for allowed Departments, Categories, and a sample upload file.
+Visual summary of expenses using charts:
 
-## Bonus Points
+- Pie Chart: Total expenses by Category
+- Bar Chart: Total expenses by Department
+  These charts update dynamically based on submitted reports and help visualize spending distribution at a glance.
 
-## 🏆 Bonus Challenges (Optional)
+Libraries used:
 
-Want to show off? Implementing one or more of these will make your submission stand out:
+- chart.js
+- react-chartjs-2
 
-### 1. Integration
+Chosen because they are:
 
-Integration: **Docker:** provide a `docker-compose.yml` file to run both the frontend and backend with a single command.
+- Lightweight
+- Widely adopted
+- Well suited for dashboard-style analytics
 
-### 2. Analytics Dashboard
+🧠 Architectural Decisions
+Frontend
 
-Add a visual summary to the Dashboard.
+Strong use of TypeScript interfaces and types
+Clear separation between:
 
-- Display a **Pie Chart** showing "Total Expenses by Category".
-- Display a **Bar Chart** showing "Total Expenses by Department".
+- UI components
+- API layer
+- Utilities / formatters
 
-### 3. Smart Duplicate Detection
+Centralized API handler with consistent error handling
+Explicit loading, error, and success states for better UX
 
-Prevent double-charging!
+Backend
 
-- If a user uploads an expense that matches an existing record (same Date, Amount, and Description), flag it as a **"Possible Duplicate"** during validation.
-- Allow the user to "Ignore Warning" and submit anyway, or remove the duplicate.
+Clean separation of concerns:
 
-### 4. Export to PDF
+- Routers
+- Services
+- Validation logic
+- Schemas
 
-Allow users to download a submitted expense report as a clean, professional PDF file containing the list of expenses and the total calculation.
+Pydantic models used for:
 
-Good luck!
+- Request validation
+- Response consistency
+
+Validation rules centralized in one service
+Defensive error handling to avoid leaking internals
+
+🎨 UI & UX
+
+Built with Tailwind CSS for:
+
+- Rapid development
+- Consistent design
+- Easy responsiveness
+- Responsive layout for dashboard and forms
+
+Clear visual feedback:
+
+- Loading indicators
+- Red error alerts
+- Green success messages
+
+Currency formatted as USD ($1,200.00)
+Dates displayed in US format (MM/DD/YYYY)
+
+🚀 How to Run the Project
+Backend:
+
+cd backend
+
+# Create virtual environment
+
+python -m venv venv
+
+# Activate virtual environment
+
+venv\Scripts\Activate.ps1
+
+# Install dependencies
+
+pip install -r requirements.txt
+
+# Run the backend
+
+uvicorn app.main:app --reload
+
+Backend will be available at:
+http://localhost:8000
+
+Health check:
+http://localhost:8000/health
+
+Frontend
+
+- cd frontend
+- npm install
+- npm run dev
+
+Login:
+
+- email: test@test.com
+- Password: 1234
+
+✅ Conclusion
+
+This project demonstrates a complete full-stack solution focused on clarity, validation, and maintainability.
+It covers the full expense reporting workflow — from data entry and validation to submission and visualization — while respecting the constraints of the technical challenge.
+
+Special emphasis was placed on:
+Strong backend validation and clear error reporting
+Type safety and predictable data flow between frontend and backend
+A clean, user-friendly interface with meaningful feedback
+Readable and modular code organization on both sides of the stack
+The architecture is intentionally simple yet scalable, allowing the application to be easily extended with features such as persistent databases, real authentication, or role-based access control.
+Overall, this implementation aims to balance correctness, usability, and code quality, reflecting real-world development practices in a controlled technical assessment environment.

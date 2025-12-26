@@ -3,9 +3,6 @@ from pathlib import Path
 from typing import List
 from app.models.schemas import OptionItem
 
-# app/services/meta_service.py
-
-# backend/app/services/meta_service.py
 # Queremos llegar a: expense-report-challenge/data
 ROOT_DIR = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT_DIR / "data"

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models.schemas import ReportSubmitRequest, ReportSummary, ReportDetail
 from app.services.reports_service import submit_report, get_reports, get_report_by_id
-from app.services.validation import validate_row  # ✅ reusar reglas
+from app.services.validation import validate_row
 
 router = APIRouter()
 

@@ -20,7 +20,6 @@ function todayISO() {
     .slice(0, 10);
 }
 
-// ISO YYYY-MM-DD se puede comparar lexicográficamente
 function isISODateInRange(value: string, minISO: string, maxISO: string) {
   return value >= minISO && value <= maxISO;
 }
@@ -44,11 +43,9 @@ export default function ManualEntryCard({ onCreated }: Props) {
   const [loadingMeta, setLoadingMeta] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  // Mensajes “de servidor”
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  // Para mostrar errores visuales solo después de intentar enviar
   const [touchedSubmit, setTouchedSubmit] = useState(false);
 
   async function loadMeta() {
@@ -71,7 +68,6 @@ export default function ManualEntryCard({ onCreated }: Props) {
     loadMeta();
   }, []);
 
-  // ✅ ÚNICA fuente de verdad de validación
   function getValidationMessage(f: ExpenseRow): string | null {
     if (!f.date) return "Please select a date.";
     if (!isISODateInRange(f.date, minDate, maxDate))
@@ -96,7 +92,6 @@ export default function ManualEntryCard({ onCreated }: Props) {
 
   const canSubmit = useMemo(() => validationMsg === null, [validationMsg]);
 
-  // helpers para borde rojo (solo cuando el user intentó enviar)
   const showFieldErrors = touchedSubmit && !!validationMsg;
 
   const dateInvalid =
@@ -126,7 +121,7 @@ export default function ManualEntryCard({ onCreated }: Props) {
     setTouchedSubmit(true);
 
     const msg = getValidationMessage(form);
-    if (msg) return; // ✅ el banner rojo ya lo muestra
+    if (msg) return;
 
     setSubmitting(true);
     try {

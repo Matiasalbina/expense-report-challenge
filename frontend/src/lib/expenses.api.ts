@@ -6,7 +6,6 @@ export const expensesApi = {
     const form = new FormData();
     form.append("file", file);
 
-    // Importante: NO setear Content-Type manualmente, el browser agrega boundary
     return apiFetch<ValidateExpensesResponse>("/expenses/validate", {
       method: "POST",
       body: form,

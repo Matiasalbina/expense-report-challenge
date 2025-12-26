@@ -2,7 +2,6 @@ from app.storage import store
 
 
 def submit_report(expenses: list[dict]) -> dict:
-    # aquí puedes reforzar: currency USD, amount > 0, etc.
     return store.add_report(expenses)
 
 

@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import { isAuthed, clearToken } from "./lib/auth";
 
 export default function App() {
-  const [authed, setAuthed] = useState(isAuthed());
+  const [authed, setAuthed] = useState<boolean>(() => isAuthed());
+
+  useEffect(() => {
+    function syncAuthFromStorage() {
+      setAuthed(isAuthed());
+    }
+
+    window.addEventListener("storage", syncAuthFromStorage);
+    return () => window.removeEventListener("storage", syncAuthFromStorage);
+  }, []);
 
   if (!authed) {
     return <LoginPage onSuccess={() => setAuthed(true)} />;
@@ -19,6 +28,7 @@ export default function App() {
         <button
           onClick={() => {
             clearToken();
+            localStorage.removeItem("authToken");
             setAuthed(false);
           }}
           className="rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 transition"

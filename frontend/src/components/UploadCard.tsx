@@ -143,6 +143,15 @@ export default function UploadCard({ onSubmitted }: Props) {
     }
   }
 
+  function resetDraftOnFileChange(nextFile: File | null) {
+    setFile(nextFile);
+    setResult(null);
+    setValidRows([]);
+    setInvalidRows([]);
+    setError(null);
+    setSuccess(null);
+  }
+
   return (
     <div className="rounded-lg border bg-white">
       <div className="border-b p-4">
@@ -181,20 +190,29 @@ export default function UploadCard({ onSubmitted }: Props) {
         )}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <input
-            type="file"
-            accept=".xlsx,.csv"
-            // Al cambiar de archivo, limpiar estado anterior
-            onChange={(e) => {
-              setFile(e.target.files?.[0] ?? null);
-              setResult(null);
-              setValidRows([]);
-              setInvalidRows([]);
-              setError(null);
-              setSuccess(null);
-            }}
-            className="block w-full text-sm"
-          />
+          {/* File picker (custom button) */}
+          <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
+            <input
+              id="expense-file"
+              type="file"
+              accept=".xlsx,.csv"
+              onChange={(e) =>
+                resetDraftOnFileChange(e.target.files?.[0] ?? null)
+              }
+              className="hidden"
+            />
+
+            <label
+              htmlFor="expense-file"
+              className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 sm:w-auto"
+            >
+              📎 Choose file
+            </label>
+
+            <span className="truncate text-sm text-gray-600">
+              {file ? file.name : "No file selected"}
+            </span>
+          </div>
 
           <div className="flex gap-2">
             <button

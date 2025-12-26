@@ -32,7 +32,6 @@ export default function AnalyticsPanel({ reports }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Trae detalles para poder calcular category/department
   useEffect(() => {
     let cancelled = false;
 
@@ -149,7 +148,6 @@ export default function AnalyticsPanel({ reports }: Props) {
               </div>
             </div>
 
-            {/* Bar: total por department */}
             <div className="rounded-lg border p-3">
               <div className="mb-2 text-sm font-medium text-gray-900">
                 Total expenses by Department
